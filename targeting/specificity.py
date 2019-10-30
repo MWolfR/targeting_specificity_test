@@ -36,7 +36,7 @@ def neg_log_likelihood_from_vec(px, res):
     return neg_log_likelihood(px, R, N)
 
 
-def max_likelihood(R, N):
+def first_hit_fit(R, N):
     """Find the most likely value for p under the 'first hit' binomial model
         Inputs:
           R (np.array, shape: (l,), dtype: bool): The results in terms of how many of the n outcomes was positive.
@@ -48,7 +48,7 @@ def max_likelihood(R, N):
     return result.x[0]
 
 
-def max_likelihood_from_vec(res):
+def first_hit_fit_from_vec(res):
     """Find the most likely value for p under the 'first hit' binomial model
             Inputs:
               res (list of np.arrays): List of results. Each individual result is an array of dtype bool
@@ -56,7 +56,7 @@ def max_likelihood_from_vec(res):
               """
     R = numpy.array(map(numpy.sum, res))
     N = numpy.array(map(len, res))
-    return max_likelihood(R, N)
+    return first_hit_fit(R, N)
 
 
 def trivial_fit(R, N):
