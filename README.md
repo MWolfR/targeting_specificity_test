@@ -13,7 +13,9 @@ In this notebook, I first recreate their analysis from the description in their 
 To follow my analysis, simply run the included jupyter notebook:
 
 git clone git@github.com:MWolfR/targeting_specificity_test.git
+
 cd targeting_specificity_test
+
 jupyter notebook Targeting specificity test.ipynb
 
 Required python packages are:
