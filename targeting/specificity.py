@@ -121,8 +121,7 @@ def significant_targeting_fraction(data, control, target_rate, expected_p=None):
         pos2 = numpy.array([(p2 < thresh).mean() for thresh in thresholds]).astype(float)
         fdr = pos2 / (pos1 + 1E-12)
         if not numpy.any(fdr > target_rate):
-            print(fdr)
-        assert numpy.any(fdr > target_rate)
+            return thresholds[-1]
         idxx = numpy.nonzero(fdr > target_rate)[0][0] - 1
         #Note: idxx cannot be 0
         return thresholds[idxx]
