@@ -42,7 +42,8 @@ def first_hit_fit(R, N):
           R (np.array, shape: (l,), dtype: bool): The results in terms of how many of the n outcomes was positive.
           N (np.array, dtype: int): The array of values of n to use in the binomial model"""
     from scipy.optimize import minimize
-    initial_guess = numpy.array([0.25])
+    #initial_guess = numpy.array([0.25])
+    initial_guess = numpy.array([(R/N).mean()])
     result = minimize(neg_log_likelihood, initial_guess, (R, N), bounds=[(1E-12, 1-1E-12)])
     assert result.success
     return result.x[0]
@@ -130,8 +131,8 @@ def significant_targeting_fraction(data, control, target_rate, expected_p=None):
                               for _p, _ctrl in zip(p, p_ctrl)]).reshape((len(keys), 1))
     significants = p < thresholds
     # The following could be used to ensure that any axon is only targeting a single type.
-    #for idx in numpy.nonzero(significants.sum(axis=0) > 1)[0]:
-    #    significants[:, idx] = significants[:, idx] & (p[:, idx] == p[significants[:, idx], idx].min())
+    for idx in numpy.nonzero(significants.sum(axis=0) > 1)[0]:
+        significants[:, idx] = significants[:, idx] & (p[:, idx] == p[significants[:, idx], idx].min())
     res = dict([(k, (1.0 - target_rate) * val)
                 for k, val in zip(keys, significants.mean(axis=1))])
     return res
